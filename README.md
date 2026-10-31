@@ -10,6 +10,54 @@ The project aims to provide a configurable pipeline engine for reading, transfor
 
 Early development.
 
+## Quick Start
+
+Requirements: Python 3.11+
+
+Install the project:
+
+```bash
+python -m pip install -e .
+```
+
+Run a sample transformation:
+
+```bash
+flowpipe \
+  --input examples/people.csv \
+  --output london.json \
+  --filter city=London \
+  --select name,age \
+  --rename name=full_name
+```
+
+Alternatively, run:
+
+```bash
+python -m flowpipe --help
+```
+
+The example filters records from London, keeps
+the name and age columns, and renames name
+to full_name.
+
+## Current Capabilities
+
+- CSV and JSON input
+- Row filtering by exact equality
+- Column selection and renaming
+- CSV and JSON output
+- Command-line interface
+- Automated tests with GitHub Actions
+
+## Known Limitations
+
+- CSV values are treated as strings.
+- Filters support exact equality only.
+- Pipelines cannot yet be saved as configurations.
+- An empty CSV result does not preserve headers.
+- Advanced validation and logging are not implemented.
+
 ## Initial Goals
 
 - Read CSV and JSON files
