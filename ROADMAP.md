@@ -1,26 +1,34 @@
+
 # FlowPipe Development Roadmap
 
-## Phase 1 - Core Functionality
-- [ ] CSV reader
-- [ ] JSON reader
-- [ ] Column selection
-- [ ] Column renaming
-- [ ] Row filtering
-- [ ] CSV and JSON exporters
-- [ ] Unit tests
+## Phase 1 - Core MVP
 
-## Phase 2 - Pipeline Engine
-- [ ] YAML-based configuration
-- [ ] Multi-step pipelines
-- [ ] Transformation validation
-- [ ] Error handling
-- [ ] Logging
+- [x] CSV reader
+- [x] JSON reader
+- [x] Column selection
+- [x] Column renaming
+- [x] Row filtering
+- [x] CSV and JSON exporters
+- [x] Core pipeline engine
+- [x] Command-line interface
+- [x] Automated tests
+- [x] GitHub Actions CI
 
-## Phase 3 - Advanced Features
-- [ ] Web dashboard
+## Phase 2 - Pipeline Improvements
+
+- [ ] YAML-based pipeline configuration
+- [ ] Multiple configurable transformation steps
+- [ ] Data type conversion and schema validation
+- [ ] Improved CSV headers and empty-data handling
+- [ ] Structured error handling
+- [ ] Logging and dry-run mode
+- [ ] Extended integration tests
+
+## Phase 3 - Advanced Development
+
+- [ ] Web-based pipeline editor
+- [ ] Pipeline execution history
 - [ ] Pipeline scheduling
-- [ ] Execution history
 - [ ] Database connectors
 - [ ] Plugin architecture
-- [ ] Docker support
-- [ ] Integration tests
+- [ ] Docker packaging
