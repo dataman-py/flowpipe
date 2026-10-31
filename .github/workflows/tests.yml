@@ -25,3 +25,14 @@ jobs:
 
       - name: Run tests
         run: python -m pytest -q
+
+      - name: Run CLI smoke test
+        run: |
+          python -m flowpipe \
+            --input examples/people.csv \
+            --output "$RUNNER_TEMP/london.json" \
+            --filter city=London \
+            --select name,age \
+            --rename name=full_name
+
+          python -c 'import json, os; p=os.path.join(os.environ["RUNNER_TEMP"], "london.json"); data=json.load(open(p, encoding="utf-8")); assert len(data)==3'
