@@ -57,7 +57,7 @@ names. Without known column names, the CSV output is an empty file.
 
 The Python function `write_csv(path, rows, fieldnames=[...])` also accepts
 column names for an empty result. Duplicate column names and record keys
-outside the output columns cause an error before the output file is opened.
+outside the output columns cause an error before the writer opens the output file.
 Missing keys produce empty CSV fields.
 
 ## Known Limitations
