@@ -41,3 +41,14 @@ def test_invalid_json_structure(tmp_path):
 def test_missing_csv_file(tmp_path):
     with pytest.raises(FileNotFoundError):
         read_csv(tmp_path / "missing.csv")
+
+
+@pytest.mark.parametrize("content", ["", "name,city\n"])
+def test_empty_csv_returns_plain_list(tmp_path, content):
+    file_path = tmp_path / "empty.csv"
+    file_path.write_text(content, encoding="utf-8")
+
+    result = read_csv(file_path)
+
+    assert type(result) is list
+    assert result == []

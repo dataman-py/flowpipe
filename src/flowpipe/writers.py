@@ -11,15 +11,27 @@ Record = dict[str, Any]
 def write_csv(
     file_path: str | Path,
     rows: list[Record],
+    *,
+    fieldnames: list[str] | None = None,
 ) -> None:
-    """Write records into a CSV file."""
+    """Write records with optional column names for an empty result."""
     path = Path(file_path)
 
-    with path.open("w", encoding="utf-8", newline="") as file:
-        if not rows:
-            return
+    if fieldnames is None:
+        fieldnames = list(rows[0]) if rows else []
 
-        fieldnames = list(rows[0].keys())
+    if len(fieldnames) != len(set(fieldnames)):
+        raise ValueError("Duplicate column names are not allowed.")
+
+    fields = set(fieldnames)
+    for row in rows:
+        extra = row.keys() - fields
+        if extra:
+            raise ValueError(f"Fields not in CSV header: {extra}")
+
+    with path.open("w", encoding="utf-8", newline="") as file:
+        if not fieldnames and not rows:
+            return
 
         writer = csv.DictWriter(
             file,

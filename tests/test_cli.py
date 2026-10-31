@@ -74,3 +74,18 @@ def test_cli_invalid_rename():
         ])
 
     assert exc.value.code == 2
+
+
+def test_cli_empty_csv_headers(tmp_path, capsys):
+    source = tmp_path / "people.csv"
+    target = tmp_path / "output.csv"
+    source.write_text("name,city\nAli,London\n", encoding="utf-8")
+
+    code = main([
+        "--input", str(source), "--output", str(target),
+        "--filter", "city=Paris", "--select", "name", "--rename", "name=person",
+    ])
+
+    assert code == 0
+    assert target.read_text(encoding="utf-8") == "person\n"
+    assert "Processed 0 record(s)" in capsys.readouterr().out

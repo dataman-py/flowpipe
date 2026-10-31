@@ -50,12 +50,21 @@ to full_name.
 - Command-line interface
 - Automated tests with GitHub Actions
 
+Empty CSV results keep known column headers, including selected and renamed
+columns. CSV input supplies the headers; JSON input uses the first object's
+keys. If the input has no headers or objects, use `--select` to supply column
+names. Without known column names, the CSV output is an empty file.
+
+The Python function `write_csv(path, rows, fieldnames=[...])` also accepts
+column names for an empty result. Duplicate column names and record keys
+outside the output columns cause an error before the output file is opened.
+Missing keys produce empty CSV fields.
+
 ## Known Limitations
 
 - CSV values are treated as strings.
 - Filters support exact equality only.
 - Pipelines cannot yet be saved as configurations.
-- An empty CSV result does not preserve headers.
 - Advanced validation and logging are not implemented.
 
 ## Initial Goals
