@@ -1,7 +1,7 @@
 
 from pathlib import Path
 
-from .readers import read_csv, read_json
+from .readers import _read_csv_with_headers, read_json
 from .transforms import (
     filter_rows,
     select_columns,
@@ -27,9 +27,10 @@ def run_pipeline(
     input_format = input_path.suffix.lower()
 
     if input_format == ".csv":
-        rows = read_csv(input_path)
+        rows, fieldnames = _read_csv_with_headers(input_path)
     elif input_format == ".json":
         rows = read_json(input_path)
+        fieldnames = list(rows[0]) if rows else None
     else:
         raise ValueError(
             f"Unsupported input format: {input_format}"
@@ -50,7 +51,16 @@ def run_pipeline(
     output_format = output_path.suffix.lower()
 
     if output_format == ".csv":
-        write_csv(output_path, rows)
+        if not rows:
+            if fieldnames:
+                select_columns([], fieldnames)
+            header = dict.fromkeys(fieldnames or columns or [])
+            if columns is not None:
+                header = select_columns([header], columns)[0]
+            if rename_map is not None:
+                header = rename_columns([header], rename_map)[0]
+            fieldnames = list(header)
+        write_csv(output_path, rows, fieldnames=fieldnames if not rows else None)
     elif output_format == ".json":
         write_json(output_path, rows)
     else:
