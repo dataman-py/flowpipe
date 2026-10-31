@@ -9,6 +9,9 @@ version = "0.1.0"
 description = "A configurable CSV and JSON data transformation engine"
 requires-python = ">=3.11"
 
+[project.scripts]
+flowpipe = "flowpipe.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
